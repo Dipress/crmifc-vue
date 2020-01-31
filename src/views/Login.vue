@@ -5,6 +5,9 @@
         <b-col offset-md="3" md="6" lg="6" xs="12">
           <b-form @submit.prevent="login" class="login-form">
             <h2>Login</h2>
+            <b-alert show variant="danger" v-if="error"
+              >mismatch login or password</b-alert
+            >
             <b-form-group label="Email address:">
               <b-form-input
                 type="email"
@@ -33,17 +36,32 @@
   export default {
     name: 'login',
     components: {},
-    data: function() {
+    data() {
       return {
         form: {
           email: '',
           password: '',
         },
+        error: null,
       };
     },
     methods: {
-      login: function() {
-        window.console.log('submit');
+      login() {
+        this.$store
+          .dispatch('login', {
+            email: this.form.email,
+            password: this.form.password,
+          })
+          .then(() => {
+            this.error = null;
+            this.$router.push({name: 'home'});
+          })
+          .catch(error => {
+            this.error = error.response.data.message;
+          })
+          .finally(() => {
+            (this.form.email = ''), (this.form.password = '');
+          });
       },
     },
   };

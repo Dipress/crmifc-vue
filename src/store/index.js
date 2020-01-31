@@ -1,13 +1,17 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import state from './state.js';
+import * as actions from './actions.js';
+import * as  mutations from './mutations.js'
 
 Vue.use(Vuex);
 
+const token = localStorage.getItem('crmifc');
+
 export default new Vuex.Store({
-  state: {
-    user: null,
-  },
-  mutations: {},
-  actions: {},
+  state,
+  actions,
+  mutations,
+  getters: {},
   modules: {},
 });
