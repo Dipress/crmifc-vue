@@ -33,53 +33,53 @@
 </template>
 
 <script>
-  export default {
-    name: 'login',
-    components: {},
-    data() {
-      return {
-        form: {
-          email: '',
-          password: '',
-        },
-        error: null,
-      };
-    },
-    methods: {
-      login() {
-        this.$store
-          .dispatch('login', {
-            email: this.form.email,
-            password: this.form.password,
-          })
-          .then(() => {
-            this.error = null;
-            this.$router.push({name: 'home'});
-          })
-          .catch(error => {
-            this.error = error.response.data.message;
-          })
-          .finally(() => {
-            (this.form.email = ''), (this.form.password = '');
-          });
+export default {
+  name: 'login',
+  components: {},
+  data() {
+    return {
+      form: {
+        email: '',
+        password: '',
       },
+      error: null,
+    };
+  },
+  methods: {
+    login() {
+      this.$store
+        .dispatch('login', {
+          email: this.form.email,
+          password: this.form.password,
+        })
+        .then(() => {
+          this.error = null;
+          this.$router.push({name: 'home'});
+        })
+        .catch(error => {
+          this.error = error.response.data.message;
+        })
+        .finally(() => {
+          (this.form.email = ''), (this.form.password = '');
+        });
     },
-  };
+  },
+};
 </script>
 
 <style scoped>
-  .login {
-    margin-top: 12%;
-  }
+.login {
+  margin-top: 12%;
+}
 
-  .login-form {
-    margin: 0 auto;
-    padding: 8%;
-    background-color: #fff;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-  }
+.login-form {
+  margin: 0 auto;
+  padding: 8%;
+  background-color: #f8f9fa;
+  border: 1px solid #e5e5e5;
+}
 
-  .login-form h2 {
-    text-align: center;
-  }
+.login-form h2 {
+  text-align: center;
+}
 </style>
