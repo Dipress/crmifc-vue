@@ -20,12 +20,14 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
+
   export default {
     name: 'NavBar',
     computed: {
-      isAuth() {
-        return this.$store.state.user.isAuthenticated;
-      },
+      ...mapGetters({
+        isAuth: 'isAuth',
+      }),
     },
     methods: {
       logout() {

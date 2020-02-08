@@ -33,10 +33,10 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/">
+          <router-link active-class="active" class="nav-link" to="/roles">
             <b-icon-cone-striped></b-icon-cone-striped>
             Roles
-          </a>
+          </router-link>
         </li>
       </ul>
     </div>
@@ -44,58 +44,58 @@
 </template>
 
 <script>
-export default {
-  name: 'SideBar',
-};
+  export default {
+    name: 'SideBar',
+  };
 </script>
 
 <style>
-.sidebar {
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 100;
-  padding: 48px 0 0;
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
-}
-
-.sidebar-sticky {
-  position: relative;
-  top: 0;
-  height: calc(100vh - 48px);
-  padding-top: 0.5rem;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-@supports ((position: -webkit-sticky) or (position: sticky)) {
-  .sidebar-sticky {
-    position: -webkit-sticky;
-    position: sticky;
+  .sidebar {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 48px 0 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
   }
-}
 
-.sidebar .nav-link {
-  font-weight: 500;
-  color: #333;
-}
+  .sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 
-.sidebar .nav-link {
-  margin-right: 4px;
-  color: #999;
-}
+  @supports ((position: -webkit-sticky) or (position: sticky)) {
+    .sidebar-sticky {
+      position: -webkit-sticky;
+      position: sticky;
+    }
+  }
 
-.sidebar .nav-link.active {
-  color: #007bff;
-}
+  .sidebar .nav-link {
+    font-weight: 500;
+    color: #333;
+  }
 
-.sidebar .nav-link:hover,
-.sidebar .nav-link.active {
-  color: inherit;
-}
+  .sidebar .nav-link {
+    margin-right: 4px;
+    color: #999;
+  }
 
-.sidebar-heading {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-}
+  .sidebar .nav-link.active {
+    color: #007bff;
+  }
+
+  .sidebar .nav-link:hover,
+  .sidebar .nav-link.active {
+    color: inherit;
+  }
+
+  .sidebar-heading {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
 </style>
