@@ -5,6 +5,7 @@
       @submit.prevent="createRole"
       class="role-form"
     >
+      <b-alert show variant="danger" v-if="error">{{ error }}</b-alert>
       <b-form-group label="Name:">
         <b-form-input
           type="text"
@@ -17,6 +18,7 @@
     </b-form>
 
     <b-form v-else @submit.prevent="updateRole" class="role-form">
+      <b-alert show variant="danger" v-if="error">{{ error }}</b-alert>
       <b-form-group label="Name:">
         <b-form-input
           type="text"
@@ -50,22 +52,30 @@
             name: this.form.name,
           })
           .then(() => {
-            this.$root.$bvModal.hide('edit-role');
+            this.error = null;
           })
           .catch(error => {
-            this.error = error;
-            window.console.log(error);
+            this.error = error.response.data.message;
+          })
+          .finally(() => {
+            if (!this.error) {
+              this.$root.$bvModal.hide('edit-role');
+            }
           });
       },
       createRole() {
         this.$store
           .dispatch('createRole', this.form.name)
           .then(() => {
-            this.$root.$bvModal.hide('create-role');
+            this.error = null;
           })
           .catch(error => {
-            this.error = error;
-            window.console.log(error);
+            this.error = error.response.data.message;
+          })
+          .finally(() => {
+            if (!this.error) {
+              this.$root.$bvModal.hide('create-role');
+            }
           });
       },
     },
