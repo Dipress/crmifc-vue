@@ -2,14 +2,13 @@
   <div>
     <b-form
       v-if="type === 'create'"
-      @submit.prevent="createRole"
+      @submit.prevent="newRole"
       class="role-form"
     >
       <b-alert show variant="danger" v-if="error">{{ error }}</b-alert>
       <b-form-group label="Name:">
         <b-form-input
           type="text"
-          required
           placeholder="Enter role name"
           v-model="form.name"
         ></b-form-input>
@@ -17,12 +16,11 @@
       <b-button type="submit" variant="success">Create</b-button>
     </b-form>
 
-    <b-form v-else @submit.prevent="updateRole" class="role-form">
+    <b-form v-else @submit.prevent="editRole" class="role-form">
       <b-alert show variant="danger" v-if="error">{{ error }}</b-alert>
       <b-form-group label="Name:">
         <b-form-input
           type="text"
-          required
           placeholder="Enter role name"
           v-model="form.name"
         ></b-form-input>
@@ -33,6 +31,8 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
+
   export default {
     name: 'RoleForm',
     props: ['role', 'type'],
@@ -44,39 +44,36 @@
         error: null,
       };
     },
+    computed: {
+      ...mapGetters(['apiError']),
+    },
     methods: {
-      updateRole() {
-        this.$store
-          .dispatch('updateRole', {
-            id: this.role.id,
-            name: this.form.name,
-          })
-          .then(() => {
-            this.error = null;
-          })
-          .catch(error => {
-            this.error = error.response.data.message;
-          })
-          .finally(() => {
-            if (!this.error) {
-              this.$root.$bvModal.hide('edit-role');
-            }
-          });
+      async editRole() {
+        this.error = null;
+
+        await this.$store.dispatch('role/updateRole', {
+          id: this.role.id,
+          name: this.form.name,
+        });
+
+        if (this.apiError) {
+          this.error = this.apiError;
+          return;
+        }
+
+        this.$root.$bvModal.hide('edit-role');
       },
-      createRole() {
-        this.$store
-          .dispatch('createRole', this.form.name)
-          .then(() => {
-            this.error = null;
-          })
-          .catch(error => {
-            this.error = error.response.data.message;
-          })
-          .finally(() => {
-            if (!this.error) {
-              this.$root.$bvModal.hide('create-role');
-            }
-          });
+      async newRole() {
+        this.error = null;
+
+        await this.$store.dispatch('role/createRole', this.form.name);
+
+        if (this.apiError) {
+          this.error = this.apiError;
+          return;
+        }
+
+        this.$root.$bvModal.hide('create-role');
       },
     },
   };

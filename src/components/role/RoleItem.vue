@@ -5,10 +5,10 @@
     <td>{{ moment(role.created_at).format('DD.MM.YYYY') }}</td>
     <td>{{ moment(role.updated_at).format('DD.MM.YYYY') }}</td>
     <td>
-      <b-button variant="warning" @click="setRole" v-b-modal.edit-role>
+      <b-button variant="warning" @click="useRole" v-b-modal.edit-role>
         <b-icon-pencil></b-icon-pencil>
       </b-button>
-      <b-button variant="danger" @click="deleteRole">
+      <b-button variant="danger" @click="removeRole">
         <b-icon-trash></b-icon-trash>
       </b-button>
     </td>
@@ -17,6 +17,7 @@
 
 <script>
   import moment from 'moment';
+  import {mapActions} from 'vuex';
 
   export default {
     name: 'RoleItem',
@@ -25,14 +26,12 @@
       moment() {
         return moment();
       },
-      setRole() {
-        this.$store.dispatch('setRole', this.role.id);
+      ...mapActions('role', ['setRole', 'deleteRole']),
+      useRole() {
+        this.setRole(this.role.id);
       },
-
-      deleteRole() {
-        this.$store.dispatch('deleteRole', this.role.id).catch(error => {
-          console.log(error);
-        });
+      removeRole() {
+        this.deleteRole(this.role.id);
       },
     },
   };

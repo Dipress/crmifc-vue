@@ -1,13 +1,9 @@
 const token = localStorage.getItem('crmifc');
 
 export default {
+  error: null,
   user: {
     token: token,
     isAuthenticated: token ? true : false,
-  },
-  role: {
-    items: [],
-    item: {},
-    isLoading: true,
   },
 };
