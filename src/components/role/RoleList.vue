@@ -36,7 +36,7 @@
 <script>
   import RoleItem from './RoleItem.vue';
   import RoleForm from './RoleForm.vue';
-  import {mapGetters} from 'vuex';
+  import {mapGetters, mapActions} from 'vuex';
 
   export default {
     name: 'RoleList',
@@ -44,15 +44,14 @@
       RoleItem,
       RoleForm,
     },
-    computed: {
-      ...mapGetters({
-        roles: 'roles',
-        isLoading: 'isLoadingRoles',
-        role: 'role',
-      }),
-    },
     mounted() {
-      this.$store.dispatch('getRoles');
+      this.getRoles();
+    },
+    computed: {
+      ...mapGetters('role', ['roles', 'isLoading', 'role']),
+    },
+    methods: {
+      ...mapActions('role', ['getRoles']),
     },
   };
 </script>
