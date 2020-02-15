@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
-import Login from '../views/Login.vue';
-import Role from '../views/Role.vue';
+import Home from '@/views/Home.vue';
+import Login from '@/views/Login.vue';
+import Role from '@/views/Role.vue';
+import User from '@/views/User.vue';
 
 Vue.use(VueRouter);
 
@@ -22,6 +23,12 @@ const routes = [
     path: '/roles',
     name: 'role',
     component: Role,
+    meta: {requiresAuth: true, layout: 'dashboard'},
+  },
+  {
+    path: '/users',
+    name: 'user',
+    component: User,
     meta: {requiresAuth: true, layout: 'dashboard'},
   },
 ];
