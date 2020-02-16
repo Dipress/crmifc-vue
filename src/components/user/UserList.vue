@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p>Loading...</p>
-    <div class="content">
+    <p v-if="isLoading">Loading...</p>
+    <div v-else class="content">
       <b-button class="create" variant="primary" v-b-modal.create-user>
         <b-icon-document-text></b-icon-document-text>
       </b-button>
@@ -18,7 +18,11 @@
           </tr>
         </thead>
         <tbody>
-          <user-item></user-item>
+          <user-item
+            :key="user.id"
+            :user="user"
+            v-for="user in users"
+          ></user-item>
         </tbody>
       </table>
     </div>
@@ -26,7 +30,7 @@
       ><user-form type="create"></user-form>
     </b-modal>
     <b-modal title="Edit User" :hide-footer="true" centered id="edit-user"
-      ><user-form></user-form>
+      ><user-form :user="user"></user-form>
     </b-modal>
   </div>
 </template>
@@ -34,12 +38,22 @@
 <script>
   import UserForm from './UserForm.vue';
   import UserItem from './UserItem.vue';
+  import {mapGetters, mapActions} from 'vuex';
 
   export default {
     name: 'UserList',
     components: {
       UserForm,
       UserItem,
+    },
+    mounted() {
+      this.getUsers();
+    },
+    computed: {
+      ...mapGetters('user', ['users', 'isLoading', 'user']),
+    },
+    methods: {
+      ...mapActions('user', ['getUsers']),
     },
   };
 </script>

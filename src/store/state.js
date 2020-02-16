@@ -2,7 +2,7 @@ const token = localStorage.getItem('crmifc');
 
 export default {
   error: null,
-  user: {
+  auth: {
     token: token,
     isAuthenticated: token ? true : false,
   },

@@ -1,5 +1,5 @@
 export const isAuth = state => {
-  return state.user.isAuthenticated;
+  return state.auth.isAuthenticated;
 };
 
 export const apiError = state => {
