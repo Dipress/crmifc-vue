@@ -1,11 +1,11 @@
 <template>
   <tr>
-    <td>user id</td>
-    <td>username</td>
-    <td>email</td>
-    <td>role name</td>
-    <td>created at</td>
-    <td>updated at</td>
+    <td>{{ user.id }}</td>
+    <td>{{ user.username }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.role.name }}</td>
+    <td>{{ moment(user.created_at).format('DD.MM.YYYY') }}</td>
+    <td>{{ moment(user.updated_at).format('DD.MM.YYYY') }}</td>
     <td>
       <b-button variant="warning" @click="useUser" v-b-modal.edit-user>
         <b-icon-pencil></b-icon-pencil>
@@ -18,14 +18,22 @@
 </template>
 
 <script>
+  import moment from 'moment';
+  import {mapActions} from 'vuex';
+
   export default {
     name: 'UserItem',
+    props: ['user'],
     methods: {
+      moment() {
+        return moment();
+      },
+      ...mapActions('user', ['setUser', 'deleteUser']),
       useUser() {
-        window.console.log('set User event');
+        this.setUser(this.user.id);
       },
       removeUser() {
-        window.console.log('remove User event');
+        this.deleteUser(this.user.id);
       },
     },
   };

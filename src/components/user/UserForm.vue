@@ -77,6 +77,8 @@
 </template>
 
 <script>
+  import {mapGetters, mapActions} from 'vuex';
+
   export default {
     name: 'UserForm',
     props: ['user', 'type'],
@@ -88,25 +90,46 @@
           password: this.user ? this.user.password : null,
           role_id: this.user ? this.user.role.id : null,
         },
-        roles: [
-          {
-            id: 1,
-            name: 'Admin',
-          },
-          {
-            id: 2,
-            name: 'Manager',
-          },
-        ],
         error: null,
       };
     },
+    mounted() {
+      this.getRoles();
+    },
+    computed: {
+      ...mapGetters('role', ['roles']),
+      ...mapGetters(['apiError']),
+    },
+
     methods: {
-      newUser() {
-        window.console.log('new user event', this.form);
+      ...mapActions('role', ['getRoles']),
+
+      async newUser() {
+        this.error = null;
+
+        await this.$store.dispatch('user/createUser', this.form);
+
+        if (this.apiError) {
+          this.error = this.apiError;
+          return;
+        }
+        window.console.log('newUser:', this.form);
+
+        this.$root.$bvModal.hide('create-user');
       },
-      editUser() {
-        window.console.log('edit role event', this.user);
+      async editUser() {
+        this.error = null;
+
+        await this.$store.dispatch('user/updateUser', {
+          id: this.user.id,
+          ...this.form,
+        });
+
+        if (this.apiError) {
+          this.error = this.apiError;
+          return;
+        }
+        this.$root.$bvModal.hide('edit-user');
       },
     },
   };
