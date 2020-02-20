@@ -14,10 +14,22 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/">
+          <b-button class="nav-link" variant="link" @click="toggle">
             <b-icon-book-half-fill></b-icon-book-half-fill>
             Wiki
-          </a>
+          </b-button>
+          <ul v-if="show && categories" class="nav flex-column child">
+            <li class="nav-item">
+              <router-link
+                :key="category.id"
+                v-for="category in categories"
+                active-class="active"
+                class="nav-link"
+                to="/categories/1"
+                >{{ category.name }}</router-link
+              >
+            </li>
+          </ul>
         </li>
       </ul>
       <h6
@@ -44,8 +56,27 @@
 </template>
 
 <script>
+  import {mapGetters, mapActions} from 'vuex';
+
   export default {
     name: 'SideBar',
+    data() {
+      return {
+        show: false,
+      };
+    },
+    mounted() {
+      this.getCategories();
+    },
+    computed: {
+      ...mapGetters('category', ['categories']),
+    },
+    methods: {
+      ...mapActions('category', ['getCategories']),
+      toggle() {
+        this.show = !this.show;
+      },
+    },
   };
 </script>
 
@@ -57,6 +88,10 @@
     z-index: 100;
     padding: 48px 0 0;
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .sidebar .nav .child {
+    margin-left: 1.5rem;
   }
 
   .sidebar-sticky {
