@@ -25,7 +25,7 @@
                 v-for="category in categories"
                 active-class="active"
                 class="nav-link"
-                to="/categories/1"
+                :to="{name: 'wiki', params: {id: category.id}}"
                 >{{ category.name }}</router-link
               >
             </li>
@@ -48,6 +48,12 @@
           <router-link active-class="active" class="nav-link" to="/roles">
             <b-icon-cone-striped></b-icon-cone-striped>
             Roles
+          </router-link>
+        </li>
+        <li class="nav-item">
+          <router-link active-class="active" class="nav-link" to="/categories">
+            <b-icon-tag-fill></b-icon-tag-fill>
+            Categories
           </router-link>
         </li>
       </ul>
