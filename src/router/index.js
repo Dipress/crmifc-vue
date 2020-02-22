@@ -4,6 +4,8 @@ import Home from '@/views/Home.vue';
 import Login from '@/views/Login.vue';
 import Role from '@/views/Role.vue';
 import User from '@/views/User.vue';
+import Category from '@/views/Category.vue';
+import Wiki from '@/views/Wiki.vue';
 
 Vue.use(VueRouter);
 
@@ -29,6 +31,19 @@ const routes = [
     path: '/users',
     name: 'user',
     component: User,
+    meta: {requiresAuth: true, layout: 'dashboard'},
+  },
+  {
+    path: '/categories',
+    name: '/category',
+    component: Category,
+    meta: {requiresAuth: true, layout: 'dashboard'},
+  },
+
+  {
+    path: '/wiki/:id',
+    name: 'wiki',
+    component: Wiki,
     meta: {requiresAuth: true, layout: 'dashboard'},
   },
 ];

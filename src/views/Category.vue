@@ -1,24 +1,25 @@
 <template>
   <div class="main">
     <b-breadcrumb :items="items"></b-breadcrumb>
-    <role-list></role-list>
+    <category-list></category-list>
   </div>
 </template>
 
 <script>
-  import RoleList from '@/components/role/RoleList.vue';
+  import CategoryList from '@/components/category/CategoryList.vue'
+
   export default {
+    name: 'Category',
+    components: {
+      CategoryList,
+    },
     data() {
       return {
         items: [
           {text: 'Dashboard', to: {name: 'home'}},
-          {text: 'Roles', to: {name: 'roles'}, active: true},
+          {text: 'Categories', to: {name: 'categories'}, active: true},
         ],
       };
-    },
-    name: 'role',
-    components: {
-      RoleList,
     },
   };
 </script>
